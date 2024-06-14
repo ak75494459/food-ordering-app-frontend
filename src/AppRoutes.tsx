@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { BrowserRouter as Router } from 'react-router-dom'
 import Layout from "./layouts/layout";
 import HomePage from "./Pages/HomePage";
 import AuthCallbackPage from "./Pages/AuthCallbackPage";
