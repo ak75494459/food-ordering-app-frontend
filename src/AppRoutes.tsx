@@ -1,9 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom'
 import Layout from "./layouts/layout";
 import HomePage from "./Pages/HomePage";
 import AuthCallbackPage from "./Pages/AuthCallbackPage";
 import UserProfilePage from "./Pages/UserProfilePage";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import ManageRestaurantPage from "./Pages/ManageRestaurantPage";
 
 export default function AppRoutes() {
   return (
@@ -26,9 +28,15 @@ export default function AppRoutes() {
           </Layout>
         }
       />
+      <Route
+        path="/manage-restaurant"
+        element={
+          <Layout>
+            <ManageRestaurantPage/>
+          </Layout>
+        }
+      />
       </Route>
-      
-    
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
