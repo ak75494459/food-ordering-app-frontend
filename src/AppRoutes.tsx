@@ -5,6 +5,7 @@ import AuthCallbackPage from "./Pages/AuthCallbackPage";
 import UserProfilePage from "./Pages/UserProfilePage";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import ManageRestaurantPage from "./Pages/ManageRestaurantPage";
+import SearchPage from "./Pages/SearchPage";
 
 export default function AppRoutes() {
   return (
@@ -18,23 +19,31 @@ export default function AppRoutes() {
         }
       />
       <Route path="/auth-callback" element={<AuthCallbackPage />} />
-      <Route element={<ProtectedRoute/>}>
       <Route
-        path="/user-profile"
+        path="/search/:city"
         element={
-          <Layout>
-            <UserProfilePage />
+          <Layout showHero={false}>
+            <SearchPage />
           </Layout>
         }
       />
-      <Route
-        path="/manage-restaurant"
-        element={
-          <Layout>
-            <ManageRestaurantPage/>
-          </Layout>
-        }
-      />
+      <Route element={<ProtectedRoute />}>
+        <Route
+          path="/user-profile"
+          element={
+            <Layout>
+              <UserProfilePage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/manage-restaurant"
+          element={
+            <Layout>
+              <ManageRestaurantPage />
+            </Layout>
+          }
+        />
       </Route>
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
