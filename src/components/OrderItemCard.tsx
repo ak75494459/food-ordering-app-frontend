@@ -3,8 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
-import { Select, SelectContent, SelectItem, SelectValue } from "./ui/select";
-import { SelectTrigger } from "@radix-ui/react-select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import { ORDER_STATUS } from "@/config/order-status-config";
 import { useUpdateMyRestaurantOrder } from "@/api/MyRestaurantApi";
 import { useEffect, useState } from "react";
@@ -29,8 +34,6 @@ const OrderItemCard = ({ order }: Props) => {
     setStatus(newStatus);
   };
 
-  const orderDateTime = new Date(order.createdAt);
-
   const getTime = () => {
     const orderDateTime = new Date(order.createdAt);
 
@@ -42,7 +45,6 @@ const OrderItemCard = ({ order }: Props) => {
     return `${hours}:${paddedMinutes}`;
   };
 
-  const totalAmount = order.totalAmount ?? 0;
   return (
     <Card>
       <CardHeader>
@@ -65,7 +67,9 @@ const OrderItemCard = ({ order }: Props) => {
           </div>
           <div>
             Total Cost:
-            <span className="ml-2 font-normal">${totalAmount.toFixed(2)}</span>
+            <span className="ml-2 font-normal">
+              £{(order.totalAmount / 100).toFixed(2)}
+            </span>
           </div>
         </CardTitle>
         <Separator />
@@ -80,25 +84,23 @@ const OrderItemCard = ({ order }: Props) => {
               {cartItem.name}
             </span>
           ))}
-          <div className="flex flex-col space-y-1.5">
-            <Label htmlFor="status">What is the status of this order?</Label>
-            <Select
-              value={status}
-              disabled={isLoading}
-              onValueChange={(value) =>
-                handleStatusChange(value as OrderStatus)
-              }
-            >
-              <SelectTrigger id="status">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                {ORDER_STATUS.map((status) => (
-                  <SelectItem value={status.value}>{status.label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+        </div>
+        <div className="flex flex-col space-y-1.5">
+          <Label htmlFor="status">What is the status of this order?</Label>
+          <Select
+            value={status}
+            disabled={isLoading}
+            onValueChange={(value) => handleStatusChange(value as OrderStatus)}
+          >
+            <SelectTrigger id="status">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent position="popper">
+              {ORDER_STATUS.map((status) => (
+                <SelectItem value={status.value}>{status.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </CardContent>
     </Card>
